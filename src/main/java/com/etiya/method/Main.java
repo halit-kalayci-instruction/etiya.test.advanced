@@ -7,10 +7,16 @@ public class Main {
     printStatus(3);
     printStatus(100);
     printStatus(50);
+
+
+    int toplam = sum(5,10);
+
+    System.out.println(toplam);
   }
 
   // printStatus isminde bir metot
-  public static void printStatus(int status) {
+  public static void printStatus(int status)
+  {
     switch (status)
     {
       case 0:
@@ -28,5 +34,10 @@ public class Main {
       default:
         System.out.println("Geçersiz status.");
     }
+  }
+
+  public static int sum(int a, int b)
+  {
+    return a+b;
   }
 }
