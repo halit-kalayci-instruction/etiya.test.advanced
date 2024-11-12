@@ -11,6 +11,15 @@ public class Main {
 
     WebElement acceptBtn = driver.findElement(By.xpath("/html/body/div[4]/div[2]/button[3]"));
     acceptBtn.click();
+
+    WebElement searchBtn = driver.findElement(By.id("search-btn"));
+    searchBtn.click();
+
+    WebElement searchInput = driver.findElement(By.id("search-input"));
+    searchInput.sendKeys("türk telekom");
+
+    WebElement searchButton = driver.findElement(By.xpath("//*[@id=\"search-box\"]/form/div/button"));
+    searchButton.click();
   }
 }
 
