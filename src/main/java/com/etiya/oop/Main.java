@@ -19,5 +19,9 @@ public class Main {
     product1.name = "Mouse";
     product1.sell();
 
+    Product product2 = new Product("Klavye",
+            3000,
+            10);
+    product2.sell();
   }
 }
