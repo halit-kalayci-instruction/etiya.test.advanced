@@ -45,4 +45,10 @@ public class LoginPage
   public WebElement getErrorHeading() {
     return this.errorHeading;
   }
+
+  public void loginWithValidCredentials(){
+    enterUsername("standard_user");
+    enterPassword("secret_sauce");
+    clickLogin();
+  }
 }
