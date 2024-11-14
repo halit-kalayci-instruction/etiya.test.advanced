@@ -1,5 +1,6 @@
 package com.etiya.login;
 
+import com.etiya.utils.ConfigReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,7 @@ public class LoginTests
   public void startUp() {
     driver = new FirefoxDriver();
     driver.manage().window().maximize();
-    driver.get("https://www.saucedemo.com/");
+    driver.get(ConfigReader.getProperty("baseUrl"));
   }
 
   @AfterEach // -> Her test sonrası bu fonksiyonu 1 kere çalıştır.
