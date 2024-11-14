@@ -1,43 +1,53 @@
 package com.etiya.login;
 
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.junit.Assert;
 
 public class LoginTests
 {
+  FirefoxDriver driver;
+
+  @BeforeEach // -> Her test öncesi bu fonksiyonu 1 kere çalıştır.
+  public void startUp() {
+    driver = new FirefoxDriver();
+    driver.manage().window().maximize();
+    driver.get("https://www.saucedemo.com/");
+  }
+
+  @AfterEach // -> Her test sonrası bu fonksiyonu 1 kere çalıştır.
+  public void tearDown() {
+    driver.quit();
+  }
+
   @Test
   public void loginSuccessfull()
   {
-    // 3A Kuralı - 3A Prensipi - 3A Principle
-    // Arrange -> Test için hazırlık ( driverin tanımlanması, urllerin hazırlanması, parametrelerin hazırlanması )
-    FirefoxDriver driver = new FirefoxDriver();
-    driver.get("https://www.saucedemo.com/");
+    LoginPage loginPage = new LoginPage(driver);
 
-    String username = "standard_user";
-    String password = "secret_sauce";
+    loginPage.enterUsername("standard_user");
+    loginPage.enterPassword("secret_sauce");
+    loginPage.clickLogin();
 
-    WebElement usernameInput = driver.findElement(By.cssSelector("[data-test='username']"));
-    WebElement passwordInput = driver.findElement(By.cssSelector("[data-test='password']"));
-    WebElement loginBtn = driver.findElement(By.cssSelector("[data-test='login-button']"));
-    // ***
-
-    // Act -> (Action) Testin aksiyona alınması ( inputların doldurulması, butona tıklanması )
-    usernameInput.sendKeys(username);
-    passwordInput.sendKeys(password);
-    loginBtn.click();
-    // ***
-
-    // Assert -> (Doğrulama) Expected result ile actual resultın karşılaştırıldığı aşamadır.
-    assert driver.getCurrentUrl().equals("https://www.saucedemo.com/inventory.html1");
-    driver.quit();
-    // ***
+    assert driver.getCurrentUrl().equals("https://www.saucedemo.com/inventory.html");
   }
 
   @Test
   public void loginWithWrongPassword()
   {
-    // yapmak istediğimiz test
+    LoginPage loginPage = new LoginPage(driver);
+
+    loginPage.enterUsername("standard_user");
+    loginPage.enterPassword("secret_sauce1");
+    loginPage.clickLogin();
+
+    Assert.assertTrue(loginPage.getErrorHeading().isDisplayed());
+    Assert.assertEquals(
+            loginPage.getErrorHeading().getText(),
+            "Epic sadface: Username and password do not match any user in this service");
   }
 }
