@@ -25,6 +25,7 @@ public class LoginTests
   @Test
   public void loginSuccessfull()
   {
+
     LoginPage loginPage = new LoginPage(driver);
 
     loginPage.enterUsername("standard_user");
