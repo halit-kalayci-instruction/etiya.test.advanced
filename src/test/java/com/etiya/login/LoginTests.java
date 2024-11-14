@@ -1,6 +1,7 @@
 package com.etiya.login;
 
 import com.etiya.utils.ConfigReader;
+import com.etiya.utils.DriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,17 +15,8 @@ public class LoginTests
 
   @BeforeEach // -> Her test öncesi bu fonksiyonu 1 kere çalıştır.
   public void startUp() {
-
-    FirefoxOptions firefoxOptions = new FirefoxOptions();
-
-    if(Boolean.parseBoolean(ConfigReader.getProperty("headless")))
-      firefoxOptions.addArguments("--headless");
-
-    driver = new FirefoxDriver(firefoxOptions);
-    driver.manage().window().maximize();
+    driver = DriverManager.getDriver();
     driver.get(ConfigReader.getProperty("baseUrl"));
-
-
   }
 
   @AfterEach // -> Her test sonrası bu fonksiyonu 1 kere çalıştır.
@@ -35,7 +27,6 @@ public class LoginTests
   @Test
   public void loginSuccessfull()
   {
-
     LoginPage loginPage = new LoginPage(driver);
 
     loginPage.enterUsername("standard_user");
