@@ -1,12 +1,10 @@
 package com.etiya.login;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.junit.Assert;
 
 public class LoginTests
 {
@@ -45,8 +43,8 @@ public class LoginTests
     loginPage.enterPassword("secret_sauce1");
     loginPage.clickLogin();
 
-    Assert.assertTrue(loginPage.getErrorHeading().isDisplayed());
-    Assert.assertEquals(
+    Assertions.assertTrue(loginPage.getErrorHeading().isDisplayed());
+    Assertions.assertEquals(
             loginPage.getErrorHeading().getText(),
             "Epic sadface: Username and password do not match any user in this service");
   }
