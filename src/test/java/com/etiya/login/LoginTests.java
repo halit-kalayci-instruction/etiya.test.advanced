@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class LoginTests
 {
@@ -13,9 +14,17 @@ public class LoginTests
 
   @BeforeEach // -> Her test öncesi bu fonksiyonu 1 kere çalıştır.
   public void startUp() {
-    driver = new FirefoxDriver();
+
+    FirefoxOptions firefoxOptions = new FirefoxOptions();
+
+    if(Boolean.parseBoolean(ConfigReader.getProperty("headless")))
+      firefoxOptions.addArguments("--headless");
+
+    driver = new FirefoxDriver(firefoxOptions);
     driver.manage().window().maximize();
     driver.get(ConfigReader.getProperty("baseUrl"));
+
+
   }
 
   @AfterEach // -> Her test sonrası bu fonksiyonu 1 kere çalıştır.
