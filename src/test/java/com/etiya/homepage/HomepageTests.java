@@ -3,36 +3,42 @@ package com.etiya.homepage;
 import com.etiya.login.LoginPage;
 import com.etiya.utils.ConfigReader;
 import com.etiya.utils.DriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class HomepageTests
 {
-  FirefoxDriver driver;
+  static FirefoxDriver driver;
+
+  @BeforeAll // Bütün testlerden önce 1 kere çalış.
+  public static void beforeAll() {
+    driver = DriverManager.getDriver();
+    driver.get(ConfigReader.getProperty("baseUrl"));
+
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.loginWithValidCredentials();
+  }
 
   @BeforeEach
   public void beforeEach() {
-    driver = DriverManager.getDriver();
-    driver.get(ConfigReader.getProperty("baseUrl"));
+    driver.get(ConfigReader.getProperty("homepageUrl"));
   }
-  @AfterEach
-  public void afterEach() {
-    driver.quit();
-  }
+
 
   @Test
   public void hambugerMenuShouldOpen() {
-    // Login
-    LoginPage loginPage = new LoginPage(driver);
-    loginPage.loginWithValidCredentials();
-
     HomepagePage homepagePage = new HomepagePage(driver);
 
     homepagePage.clickHamburgerMenuButton();
 
     Assertions.assertTrue(homepagePage.getHamburgerMenu().isDisplayed());
+    Assertions.assertTrue(homepagePage.getHamburgerMenuCloseButton().isEnabled());
+  }
+
+  @Test
+  public void hambugerMenuShouldClose() {
+    HomepagePage homepagePage = new HomepagePage(driver);
+
+    Assertions.assertFalse(homepagePage.getHamburgerMenuCloseButton().isDisplayed());
   }
 }

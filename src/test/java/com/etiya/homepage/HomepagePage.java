@@ -33,4 +33,8 @@ public class HomepagePage
     return hamburgerMenu;
   }
 
+  public WebElement getHamburgerMenuCloseButton() {
+    return hamburgerMenuCloseButton;
+  }
+
 }
